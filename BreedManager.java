@@ -1,16 +1,23 @@
 package breeding;
 
-import java.util.Random;
+import java.util.*;
+import java.util.stream.*;
 
 public class BreedManager {
+  public static int MIN_AGE = 16;
   public static final String REGEX = ", ";
   
-  public static Human breed(Human[] parents) {
-	Human child = new Human();
+  public static String defineEyeColor(Human child, Human[] parents, Human[] humans) {
+	String eyeColor = EyeColors.BROWN;
+	String nameOfFatherInLaw = BreedManager.findParentName(child, humans, true);
+	boolean areParentsBluеEyed = parents[0].getEyeColor().equals(EyeColors.BLUE) && parents[0].getEyeColor().equals(EyeColors.BLUE);
+	boolean areFatherAndFatherInLawBluеEyed = parents[0].getEyeColor().equals(EyeColors.BLUE) && parents[1].getParentNames()[0].equals(nameOfFatherInLaw);
 	
+	if (areParentsBluеEyed || areFatherAndFatherInLawBluеEyed) {
+	  return EyeColors.BLUE;
+	}
 	
-	
-	return child;
+	return eyeColor;
   }
   
   public static int calculateIndex(int maxLimit) {
@@ -23,71 +30,77 @@ public class BreedManager {
 	
 	return index;
   }
-  /*
-  public static Object findFieldValue(String className, String fieldName) {
-	Class<?> clss = null;
-	Object fieldValue = null;
+  
+  public static String findParentName(Human human, Human[] parents, boolean isParentAFather) {
+	List<String> parentalNames = new ArrayList<String>();
+	int i = 0;
+	List<String> result = null;
+	String parent = null;
 	
-	try {
-	  clss = Class.forName(className);
-	} 
-	catch (ClassNotFoundException cnfe) {
-	  cnfe.printStackTrace(System.err);
-	  return null;
-	}
-	
-	try {
-	  fieldValue = clss.getField(fieldName);
-	} 
-	catch (NoSuchFieldException | SecurityException e) {
-	  e.printStackTrace(System.err);
-	}
-	
-	return fieldValue;
-  }
-  */
-  public static Human[] makeParents(String[] lines) {
-	String[] tmp = null;
-	Human newParent = null;
-	Human[] parents = new Human[(int) lines.length];
-	
-	for (int i = 0; i < parents.length; i++) {
-	  tmp = lines[i].split(BreedManager.REGEX);
-	  newParent = new Human();
-	  newParent.setName(tmp[0]);
+	if (isParentAFather) {
+	  for (; i < parents.length; i++) {
+		parentalNames.add(parents[0].getName());
+	  }
 	  
-	  if (tmp[1].equals(EyeColors.BLUE)) {
-	    newParent.setEyeColor(tmp[1]);
+	  final String PARENT_NAME = human.getParentNames()[0];
+	  result = parentalNames.stream().filter(currentName -> PARENT_NAME.equals(currentName)).collect(Collectors.toList());
+	} 
+	else {
+	  for (; i < parents.length; i++) {
+		parentalNames.add(parents[1].getName());
+	  }
+	  
+	  final String PARENT_NAME = human.getParentNames()[1];
+	  result = parentalNames.stream().filter(currentName -> PARENT_NAME.equals(currentName)).collect(Collectors.toList());
+	}
+	
+	parent = result.get(0);
+	
+	return parent;
+  }
+  
+  public static Human[] makeHumans(String[] lines) {
+	String[] tmp = null;
+	Human newHuman = null;
+	Human[] humans = new Human[(int) lines.length];
+	
+	for (int i = 0; i < humans.length; i++) {
+	  tmp = lines[i].split(BreedManager.REGEX);
+	  newHuman = new Human();
+	  newHuman.setName(tmp[0]);
+	  
+	  if (tmp[1].equals(EyeColors.BLUE) || tmp[1].equals(EyeColors.BROWN)) {
+		newHuman.setEyeColor(tmp[1]);
 	  }
 	  else {
-		newParent.setEyeColor(EyeColors.BROWN);
+		newHuman.setEyeColor("");
 	  }
 	  
-	  newParent.setAge(Integer.parseInt(tmp[2]));
+	  newHuman.setAge(Integer.parseInt(tmp[2]));
 	  
 	  if (tmp[3].equals(Genders.MALE)) {
-	    newParent.setGender(tmp[3]);
+		newHuman.setGender(tmp[3]);
 	  }
 	  else {
-		newParent.setGender(Genders.FEMALE);
+		newHuman.setGender(Genders.FEMALE);
 	  }
 	  
-	  parents[i] = newParent;
+	  humans[i] = newHuman;
 	}
 	
-	return parents;
+	return humans;
   }
   
   public static Human[] selectCouple(Human[] parents) {
 	int index = -1;
 	Human[] couple = new Human[2];
 	
-	while (parents[index].getGender() == Genders.FEMALE) {
+	while (parents[index].getGender() == Genders.FEMALE && parents[index].getAge() < BreedManager.MIN_AGE) {
 	  index = BreedManager.calculateIndex(parents.length);
 	}
 	couple[0] = parents[index];
 	
-	while (parents[index].getGender() == Genders.MALE) {
+	while (parents[index].getGender() == Genders.MALE && parents[index].getAge() < BreedManager.MIN_AGE) {
 	  index = BreedManager.calculateIndex(parents.length);
 	}
 	couple[1] = parents[index];
