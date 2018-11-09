@@ -11,35 +11,51 @@ public class BreedManager {
 	return new Random().nextInt(maxLimit);
   }
   
-  public static String defineEyeColor(Human child, Human[] parents, Human[] humans) {
-	String eyeColor = EyeColors.BROWN;
-	String nameOfFatherInLaw = BreedManager.findParentName(child, humans, true);
-	boolean areParentsBluеEyed = parents[0].getEyeColor().equals(EyeColors.BLUE) && parents[1].getEyeColor().equals(EyeColors.BLUE);
-	boolean areFatherAndFatherInLawBluеEyed = parents[0].getEyeColor().equals(EyeColors.BLUE) && parents[1].getParentNames()[1].equals(nameOfFatherInLaw);
+  public static String defineEyeColor(Human child, Human[] humans) {
+	String nameOfFatherInLaw = BreedManager.findParentName(child.getParentNames()[0], humans, true);
+	Human mother = BreedManager.findParent(child.getParentNames()[0], humans);
+	Human father = BreedManager.findParent(child.getParentNames()[1], humans);
+	Human fatherInLaw = BreedManager.findParent(mother.getParentNames()[1], humans);
+	boolean areParentsBluеEyed = mother.getEyeColor().equals(EyeColors.BLUE) && father.getEyeColor().equals(EyeColors.BLUE);
+	boolean areFatherAndFatherInLawBluеEyed = father.getEyeColor().equals(EyeColors.BLUE) && fatherInLaw.getEyeColor().equals(EyeColors.BLUE);
 	
 	if (areParentsBluеEyed || areFatherAndFatherInLawBluеEyed) {
 	  return EyeColors.BLUE;
 	}
-	
-	return eyeColor;
+
+	return EyeColors.BROWN;
   }
   
-  private static String findParentName(Human human, Human[] parents, boolean isParentAFather) {
+  private static Human findParent(String parentName, Human[] humans) {
+	int i = 0;
+	Human parent = null;
+	
+	for (; i < humans.length; i++) {
+	  if (humans[i].getName().equals(parentName)) {
+		parent = humans[i];
+	    break;
+	  }
+	}
+	
+	return parent;
+  }
+  
+  private static String findParentName(String childName, Human[] humans, boolean isParentAFather) {
 	int i = 0;
 	String parentName = null;
 	
 	if (isParentAFather) {
-	  for (; i < parents.length; i++) {
-		if (human.getParentNames()[1].equals(parents[i].getName())) {
-		  parentName = parents[i].getName();
+	  for (; i < humans.length; i++) {
+		if (humans[i].getName().equals(childName)) {
+		  parentName = humans[i].getParentNames()[1];
 		  break;
 		}
 	  }
 	} 
 	else {
-	  for (; i < parents.length; i++) {
-		if (human.getParentNames()[0].equals(parents[i].getName())) {
-		  parentName = parents[i].getName();
+	  for (; i < humans.length; i++) {
+		if (humans[i].getName().equals(childName)) {
+		  parentName = humans[i].getParentNames()[0];
 		  break;
 		}
 	  }
@@ -103,20 +119,20 @@ public class BreedManager {
 	while (true) {
 	  index = BreedManager.calculateIndex(parents.length);
 	  
-	  if (parents[index].getGender().equals(Genders.MALE) && parents[index].getAge() >= BreedManager.MIN_AGE) {
-	    break;
-	  }
-	};
-	couple[1] = parents[index];
-	
-	while (true) {
-	  index = BreedManager.calculateIndex(parents.length);
-	  
 	  if (parents[index].getGender().equals(Genders.FEMALE) && parents[index].getAge() >= BreedManager.MIN_AGE) {
 	    break;
 	  }
 	};
 	couple[0] = parents[index];
+	
+	while (true) {
+	  index = BreedManager.calculateIndex(parents.length);
+	  
+	  if (parents[index].getGender().equals(Genders.MALE) && parents[index].getAge() >= BreedManager.MIN_AGE) {
+	    break;
+	  }
+	};
+	couple[1] = parents[index];
 	
 	return couple;
   }

@@ -7,7 +7,9 @@ public class Playground {
 	FileInputStream fis = null;
 	FileOutputStream fos = null;
 	String[] lines = null;
-	Human[] humans = null, couple = null;
+	Human[] humans = null;
+	Human child = null;
+	String[] couple = new String[2];
 	String eyeColor = "";
  	  
 	try {
@@ -19,13 +21,13 @@ public class Playground {
 	}
 	
 	humans = BreedManager.makeHumans(lines);
-	
-	  for (int i = 0; i < humans.length; i++) {
-		System.out.println(humans[i].getName() + ", " + humans[i].getParentNames()[0] + ", " + humans[i].getParentNames()[1]);
-	  }
-	
-    couple = BreedManager.selectCouple(humans);
-    eyeColor = BreedManager.defineEyeColor(humans[0], couple, humans);
-    System.out.println("Eye color: " + eyeColor);
+	child = humans[1];
+    couple[0] = humans[1].getParentNames()[0]; // BreedManager.selectCouple(humans);
+    couple[1] = humans[1].getParentNames()[1];
+    System.out.println("child: " + humans[1].getName());
+    System.out.println("mother: " + couple[0]);
+    System.out.println("father: " + couple[1]);
+    eyeColor = BreedManager.defineEyeColor(child, humans);
+    System.out.println("eye color: " + eyeColor);
   }
 }
