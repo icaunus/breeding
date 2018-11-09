@@ -4,6 +4,7 @@ import java.io.*;
 
 public class FileManager implements Persistable {
   static final String FILE_NAME = "/home/human/Eclipse/neon/workspace/breeding/src/breeding/data.csv";
+  static final String COLUMN_DELIMITER = ",";
   static final String ROW_DELIMITER = "\n";
 
   static String[] read(FileInputStream fis) {
@@ -22,11 +23,11 @@ public class FileManager implements Persistable {
     return new String(buffer).split(FileManager.ROW_DELIMITER);
   }
 
-  static void write(FileOutputStream fos, String[] breeders) {
+  static void write(FileOutputStream fos, String[] humans) {
 	String tmp = "";
 	
-	for (int i = 0; i < breeders.length; i++) {
-	  tmp += breeders[i] + FileManager.ROW_DELIMITER;
+	for (int i = 0; i < humans.length; i++) {
+	  tmp += humans[i] + FileManager.ROW_DELIMITER;
 	}
 	
 	try {
