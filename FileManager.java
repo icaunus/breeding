@@ -15,8 +15,8 @@ public class FileManager implements Persistable {
 	  buffer = new byte[avaialableBytes];
 	  fis.read(buffer);
 	} 
-    catch (IOException e) {
-	  e.printStackTrace();
+    catch (IOException ioe) {
+	  ioe.printStackTrace(System.err);
 	}
     
     return new String(buffer).split(FileManager.ROW_DELIMITER);

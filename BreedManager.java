@@ -24,9 +24,9 @@ public class BreedManager {
 	Random generator = new Random();
 	int index = -1;
 	
-	while (index > maxLimit) {
+	do {
 	  index = generator.nextInt();
-	}
+	} while (index > maxLimit);
 	
 	return index;
   }
