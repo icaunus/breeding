@@ -2,20 +2,20 @@ package breeding;
 
 public class Parent {
   private String name;
-  private Genders gender;
+  private String gender;
   private int age;
-  private EyeColors color;
-  private String[] parents;
+  private String eyeColor;
+  private String[] parentNames;
 
   public Parent() {
   }
   
-  public Parent(String name, Genders gender, int age, EyeColors color, String[] parents) {
+  public Parent(String name, String gender, int age, String eyeColor, String[] parentNames) {
 	this.name = name;
 	this.gender = gender;
 	this.age = age;
-	this.color = color;
-	this.parents = parents;
+	this.eyeColor = eyeColor;
+	this.parentNames = parentNames;
   }
 
   /**
@@ -35,14 +35,14 @@ public class Parent {
   /**
   * @return the gender
   */
-  public Genders getGender() {
+  public String getGender() {
 	return gender;
   }
 
   /**
   * @param gender the gender to set
   */
-  public void setGender(Genders gender) {
+  public void setGender(String gender) {
 	this.gender = gender;
   }
 
@@ -63,28 +63,28 @@ public class Parent {
   /**
   * @return the color
   */
-  public EyeColors getColor() {
-	return color;
+  public String getEyeColor() {
+	return eyeColor;
   }
 
   /**
   * @param color the color to set
   */
-  public void setColor(EyeColors color) {
-	this.color = color;
+  public void setEyeColor(String eyeColor) {
+	this.eyeColor = eyeColor;
   }
 
   /**
-  * @return the parents
+  * @return the parent names
   */
-  public String[] getParents() {
-	return parents;
+  public String[] getParentNames() {
+	return parentNames;
   }
 
   /**
   * @param parents the parents to set
   */
-  public void setParents(String[] parents) {
-	this.parents = parents;
+  public void setParentNames(String[] parentNames) {
+	this.parentNames = parentNames;
   }
 }

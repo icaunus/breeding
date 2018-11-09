@@ -1,5 +1,6 @@
 package breeding;
 
-public enum Genders {
-  MALE, FEMALE
+public abstract class Genders {
+  public static final String MALE = "мъж";
+  public static final String FEMALE = "жена";
 }
