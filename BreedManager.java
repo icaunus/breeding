@@ -5,15 +5,25 @@ import java.util.Random;
 public class BreedManager {
   public static final String REGEX = ", ";
   
-  public static long calculateIndex(long maxLimit) {
-	Random generator = new Random();
-	long index = -1;
+  public static Human breed(Human[] parents) {
+	Human child = new Human();
 	
-	index = generator.nextLong();
+	
+	
+	return child;
+  }
+  
+  public static int calculateIndex(int maxLimit) {
+	Random generator = new Random();
+	int index = -1;
+	
+	while (index > maxLimit) {
+	  index = generator.nextInt();
+	}
 	
 	return index;
   }
-  
+  /*
   public static Object findFieldValue(String className, String fieldName) {
 	Class<?> clss = null;
 	Object fieldValue = null;
@@ -35,15 +45,15 @@ public class BreedManager {
 	
 	return fieldValue;
   }
-  
-  public static Parent[] makeParents(String[] lines) {
+  */
+  public static Human[] makeParents(String[] lines) {
 	String[] tmp = null;
-	Parent newParent = null;
-	Parent[] parents = new Parent[(int) lines.length];
+	Human newParent = null;
+	Human[] parents = new Human[(int) lines.length];
 	
 	for (int i = 0; i < parents.length; i++) {
 	  tmp = lines[i].split(BreedManager.REGEX);
-	  newParent = new Parent();
+	  newParent = new Human();
 	  newParent.setName(tmp[0]);
 	  
 	  if (tmp[1].equals(EyeColors.BLUE)) {
@@ -68,31 +78,20 @@ public class BreedManager {
 	return parents;
   }
   
-  public static Parent[] selectParents(Parent[] parents) {
-	long index0 = BreedManager.calculateIndex(maxLimit);
-	long index1 = -1;
-	Parent father = null, mother = null;
+  public static Human[] selectCouple(Human[] parents) {
+	int index = -1;
+	Human[] couple = new Human[2];
 	
-	while () {
-	  
+	while (parents[index].getGender() == Genders.FEMALE) {
+	  index = BreedManager.calculateIndex(parents.length);
 	}
+	couple[0] = parents[index];
 	
-	try {
-	  /*
-	  if (parents[0].getGender() != Genders.MALE) {
-		throw new IllegalArgumentException("First parent fas to be male.");
-	  }
-	  
-	  if (parents[1].getGender() != Genders.FEMALE) {
-		throw new IllegalArgumentException("First parent fas to be male.");
-	  }
-	  */
-	  
+	while (parents[index].getGender() == Genders.MALE) {
+	  index = BreedManager.calculateIndex(parents.length);
 	}
-	catch(IllegalArgumentException iae) {
-	  iae.printStackTrace(System.err);
-	}
+	couple[1] = parents[index];
 	
-	return null;
+	return couple;
   }
 }
