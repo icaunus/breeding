@@ -14,7 +14,7 @@ public class Playground {
 	String eyeColor = "";
  	  
 	try {
-	  fis = new FileInputStream(FileManager.FILE_NAME);
+	  fis = new FileInputStream(FileManager.SOURCE_FILE_NAME);
 	  lines = FileManager.read(fis);
 	  fis.close();
 	} 
@@ -23,20 +23,21 @@ public class Playground {
 	}
 	
 	humans = BreedManager.makeHumans(lines);
+	/*
 	couple = BreedManager.selectCouple(humans);
     eyeColor = BreedManager.defineEyeColor(couple, humans);
     
     System.out.println("mother: " + couple[0].getName());
     System.out.println("father: " + couple[1].getName());
     System.out.println("child's eye color: " + eyeColor);
-    
+    */
     try {
       lines = new String[humans.length];
       
       for (int i = 0; i < humans.length; i++) {
     	String human2line = "";
     	
-		if (humans[i].getEyeColor().equals("x")) {
+		if (humans[i].getEyeColor().equals(FileManager.UNKNOWN_VALUE)) {
 		  mother = BreedManager.findParent(humans[i].getParentNames()[0], humans);
 		  father = BreedManager.findParent(humans[i].getParentNames()[1], humans);
 		  couple = new Human[2];
@@ -46,12 +47,13 @@ public class Playground {
 		  humans[i].setEyeColor(eyeColor);
 		}
 		
-		human2line += humans[i].getName() + FileManager.COLUMN_DELIMITER + humans[i].getEyeColor() + FileManager.COLUMN_DELIMITER + humans[i].getAge() + FileManager.COLUMN_DELIMITER + humans[i].getGender()
-			            + FileManager.COLUMN_DELIMITER + humans[i].getParentNames()[0] + FileManager.COLUMN_DELIMITER + humans[i].getParentNames()[1];
+		human2line += humans[i].getName() + FileManager.COLUMN_DELIMITER + humans[i].getEyeColor() + FileManager.COLUMN_DELIMITER + humans[i].getAge() + 
+			            FileManager.COLUMN_DELIMITER + humans[i].getGender() + FileManager.COLUMN_DELIMITER + humans[i].getParentNames()[0] + FileManager.COLUMN_DELIMITER + 
+			            humans[i].getParentNames()[1];
 		lines[i] = human2line;
 	  }
       
-      fos = new FileOutputStream(FileManager.FILE_NAME);
+      fos = new FileOutputStream(FileManager.OUTPUT_FILE_NAME);
       FileManager.write(fos, lines);
       fos.close();
 	} 

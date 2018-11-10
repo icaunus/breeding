@@ -3,7 +3,6 @@ package breeding;
 import java.util.*;
 
 public class BreedManager {
-  private static String EMTPTY_STRING = "";
   public static int MIN_AGE = 16;
   public static final String REGEX = ",";
   

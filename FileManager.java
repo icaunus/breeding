@@ -2,8 +2,10 @@ package breeding;
 
 import java.io.*;
 
-public class FileManager implements Persistable {
-  static final String FILE_NAME = "/home/human/Eclipse/neon/workspace/breeding/src/breeding/data.csv";
+public class FileManager implements Persistable { // /home/human/Eclipse/neon/workspace/breeding/src/breeding/
+  static final String SOURCE_FILE_NAME = "source.csv";
+  static final String OUTPUT_FILE_NAME = "output.csv";
+  static final String UNKNOWN_VALUE = "x";
   static final String COLUMN_DELIMITER = ",";
   static final String ROW_DELIMITER = "\n";
 
