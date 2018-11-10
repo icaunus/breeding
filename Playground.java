@@ -23,14 +23,7 @@ public class Playground {
 	}
 	
 	humans = BreedManager.makeHumans(lines);
-	/*
-	couple = BreedManager.selectCouple(humans);
-    eyeColor = BreedManager.defineEyeColor(couple, humans);
-    
-    System.out.println("mother: " + couple[0].getName());
-    System.out.println("father: " + couple[1].getName());
-    System.out.println("child's eye color: " + eyeColor);
-    */
+
     try {
       lines = new String[humans.length];
       

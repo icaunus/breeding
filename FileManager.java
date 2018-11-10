@@ -2,7 +2,7 @@ package breeding;
 
 import java.io.*;
 
-public class FileManager implements Persistable { // /home/human/Eclipse/neon/workspace/breeding/src/breeding/
+public class FileManager implements Persistable {
   static final String SOURCE_FILE_NAME = "source.csv";
   static final String OUTPUT_FILE_NAME = "output.csv";
   static final String UNKNOWN_VALUE = "x";
@@ -25,8 +25,9 @@ public class FileManager implements Persistable { // /home/human/Eclipse/neon/wo
     return new String(buffer).split(FileManager.ROW_DELIMITER);
   }
 
-  static void write(FileOutputStream fos, String[] humans) {
+  static boolean write(FileOutputStream fos, String[] humans) {
 	String tmp = "";
+	boolean output = false;
 	
 	for (int i = 0; i < humans.length; i++) {
 	  tmp += humans[i] + FileManager.ROW_DELIMITER;
@@ -34,12 +35,13 @@ public class FileManager implements Persistable { // /home/human/Eclipse/neon/wo
 	
 	try {
 	  fos.write(tmp.getBytes());
+	  output = true;
 	} 
-	catch(FileNotFoundException fnfe) {
-	  fnfe.printStackTrace(System.err);
-	} 
-	catch (IOException ioe) {
+	catch(IOException ioe) {
 	  ioe.printStackTrace(System.err);
+	  output = false;
 	}
+	
+	return output;
   }
 }
